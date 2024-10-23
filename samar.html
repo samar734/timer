@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown Timer</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+    }
+    #timer {
+      font-size: 100px;
+      color: #333;
+    }
+    button {
+      margin: 20px;
+      padding: 10px 20px;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h1 id="timer">00:08:00</h1>
+    <button onclick="startTimer()">Start</button>
+    <button onclick="stopTimer()">Stop</button>
+    <button onclick="resetTimer()">Reset</button>
+  </div>
+
+  <script>
+    var initialTime = 8 * 60; // 8 minutes
+    var time = initialTime;
+    var timerInterval;
+
+    function updateTimer() {
+      var hours = Math.floor(time / 3600);
+      var minutes = Math.floor((time % 3600) / 60);
+      var seconds = time % 60;
+
+      document.getElementById("timer").textContent =
+        (hours < 10 ? "0" : "") + hours + ":" +
+        (minutes < 10 ? "0" : "") + minutes + ":" +
+        (seconds < 10 ? "0" : "") + seconds;
+
+      if (time > 0) {
+        time--;
+      } else {
+        clearInterval(timerInterval);
+      }
+    }
+
+    function startTimer() {
+      timerInterval = setInterval(updateTimer, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(timerInterval);
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      time = initialTime;
+      updateTimer();
+    }
+
+    updateTimer(); // initialize display
+  </script>
+</body>
+</html>
